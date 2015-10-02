@@ -1,0 +1,60 @@
+{
+  "name": "node-red-contrib-irtemplate",
+  "version": "0.6.2",
+  "description": "KNX for node-red, utilizing pure JavaScript KNXnet/IP driver (both works: tunelling & routing)",
+  "main": "irtemplate.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/estbeetoo/node-red-contrib-irtemplate.git"
+  },
+  "keywords": [
+    "node-red",
+    "eib",
+    "irtemplate"
+  ],
+  "node-red": {
+    "nodes": {
+      "irtemplate": "irtemplate.js"
+    }
+  },
+  "author": {
+    "name": "Alexander Borovsky",
+    "email": "aborovsky@beetoo.me",
+    "url": "http://beetoo.me"
+  },
+  "license": "Attribution-NonCommercial-ShareAlike 4.0 International (CC BY-NC-SA 4.0)",
+  "bugs": {
+    "url": "https://github.com/estbeetoo/node-red-contrib-irtemplate/issues"
+  },
+  "homepage": "https://github.com/estbeetoo/node-red-contrib-irtemplate#readme",
+  "contributors": [
+    {
+      "name": "Alexander Borovsky"
+    }
+  ],
+  "gitHead": "792a6fa74037ba648702984626923cc76ff92a8f",
+  "_id": "node-red-contrib-irtemplate@0.6.2",
+  "_shasum": "902af1c0646752b7625ca57cad4aa2c4020e8a2a",
+  "_from": "node-red-contrib-irtemplate@>=0.6.2 <0.7.0",
+  "_npmVersion": "2.8.3",
+  "_nodeVersion": "0.12.0",
+  "_npmUser": {
+    "name": "aborovsky",
+    "email": "aborovsky@beetoo.me"
+  },
+  "dist": {
+    "shasum": "902af1c0646752b7625ca57cad4aa2c4020e8a2a",
+    "tarball": "http://registry.npmjs.org/node-red-contrib-irtemplate/-/node-red-contrib-irtemplate-0.6.2.tgz"
+  },
+  "maintainers": [
+    {
+      "name": "aborovsky",
+      "email": "aborovsky@bbetoo.me"
+    }
+  ],
+  "directories": {},
+  "_resolved": "https://registry.npmjs.org/node-red-contrib-irtemplate/-/node-red-contrib-irtemplate-0.6.2.tgz"
+}
