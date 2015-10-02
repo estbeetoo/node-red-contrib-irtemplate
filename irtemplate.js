@@ -32,12 +32,12 @@ module.exports = function(RED) {
 
         if (this.repeat && !isNaN(this.repeat) && this.repeat > 0) {
             this.repeat = this.repeat * 1000;
-            if (RED.settings.verbose) { this.log(RED._("inject.repeat",this)); }
+            if (RED.settings.verbose) { this.log(RED._("irtemplate.repeat",this)); }
             this.interval_id = setInterval( function() {
                 node.emit("input",{});
             }, this.repeat );
         } else if (this.crontab) {
-            if (RED.settings.verbose) { this.log(RED._("inject.crontab",this)); }
+            if (RED.settings.verbose) { this.log(RED._("irtemplate.crontab",this)); }
             this.cronjob = new cron.CronJob(this.crontab,
                 function() {
                     node.emit("input",{});
@@ -63,20 +63,20 @@ module.exports = function(RED) {
         });
     }
 
-    RED.nodes.registerType("inject",InjectNode);
+    RED.nodes.registerType("irtemplate",IRTemplateNode);
 
-    InjectNode.prototype.close = function() {
+    IRTemplateNode.prototype.close = function() {
         if (this.interval_id != null) {
             clearInterval(this.interval_id);
-            if (RED.settings.verbose) { this.log(RED._("inject.stopped")); }
+            if (RED.settings.verbose) { this.log(RED._("irtemplate.stopped")); }
         } else if (this.cronjob != null) {
             this.cronjob.stop();
-            if (RED.settings.verbose) { this.log(RED._("inject.stopped")); }
+            if (RED.settings.verbose) { this.log(RED._("irtemplate.stopped")); }
             delete this.cronjob;
         }
     }
 
-    RED.httpAdmin.post("/inject/:id", RED.auth.needsPermission("inject.write"), function(req,res) {
+    RED.httpAdmin.post("/irtemplate/:id", RED.auth.needsPermission("irtemplate.write"), function(req,res) {
         var node = RED.nodes.getNode(req.params.id);
         if (node != null) {
             try {
@@ -84,7 +84,7 @@ module.exports = function(RED) {
                 res.send(200);
             } catch(err) {
                 res.send(500);
-                node.error(RED._("inject.failed",{error:err.toString()}));
+                node.error(RED._("irtemplate.failed",{error:err.toString()}));
             }
         } else {
             res.send(404);
