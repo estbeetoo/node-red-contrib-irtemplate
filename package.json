@@ -1,6 +1,6 @@
 {
   "name": "node-red-contrib-irtemplate",
-  "version": "0.6.2",
+  "version": "0.1.0",
   "description": "KNX for node-red, utilizing pure JavaScript KNXnet/IP driver (both works: tunelling & routing)",
   "main": "irtemplate.js",
   "scripts": {
@@ -12,7 +12,10 @@
   },
   "keywords": [
     "node-red",
-    "eib",
+    "ir",
+    "infrared",
+    "infrared remote",
+    "ccf",
     "irtemplate"
   ],
   "node-red": {
