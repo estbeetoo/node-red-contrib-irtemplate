@@ -1,5 +1,5 @@
 <!--
-  Copyright 2013,2015 IBM Corp.
+  Copyright 2013, 2015 IBM Corp.
 
   Licensed under the Apache License, Version 2.0 (the "License");
   you may not use this file except in compliance with the License.
@@ -15,498 +15,187 @@
 -->
 
 <script type="text/x-red" data-template-name="irtemplate">
-    <div class="form-row node-input-payload">
-        <label for="node-input-payloadType"><i class="fa fa-envelope"></i> <span data-i18n="common.label.payload"></span></label>
-        <select id="node-input-payloadType" style="width:73%">
-          <option value="date" data-i18n="irtemplate.timestamp"></option>
-          <option value="string" data-i18n="irtemplate.string"></option>
-          <option value="none" data-i18n="irtemplate.blank"></option>
-        </select>
-    </div>
-
-    <div class="form-row" id="node-input-row-payload">
-        <label for="node-input-payload"></label>
-        <input type="text" id="node-input-payload" style="width:70%">
-    </div>
-
     <div class="form-row">
-        <label for="node-input-topic"><i class="fa fa-tasks"></i> <span data-i18n="common.label.topic"></span></label>
-        <input type="text" id="node-input-topic" style="width: 70%x">
+        <label for="node-input-name"><i class="fa fa-tag"></i> <span data-i18n="Name"></span></label>
+        <input type="text" id="node-input-name" data-i18n="[placeholder]Name">
     </div>
-
-    <div class="form-row">
-        <label for=""><i class="fa fa-repeat"></i> <span data-i18n="irtemplate.label.repeat"></span></label>
-        <select id="irtemplate-time-type-select" style="width: 73%">
-            <option value="none" data-i18n="irtemplate.none"></option>
-            <option value="interval" data-i18n="irtemplate.interval"></option>
-            <option value="interval-time" data-i18n="irtemplate.interval-time"></option>
-            <option value="time" data-i18n="irtemplate.time"></option>
-        </select>
-        <input type="hidden" id="node-input-repeat">
-        <input type="hidden" id="node-input-crontab">
-    </div>
-
-    <div class="form-row irtemplate-time-row hidden" id="irtemplate-time-row-interval">
-        <span data-i18n="irtemplate.every"></span>
-        <input id="irtemplate-time-interval-count" class="irtemplate-time-count" value="1"></input>
-        <select style="width: 100px" id="irtemplate-time-interval-units">
-            <option value="s" data-i18n="irtemplate.seconds"></option>
-            <option value="m" data-i18n="irtemplate.minutes"></option>
-            <option value="h" data-i18n="irtemplate.hours"></option>
-        </select><br/>
-    </div>
-
-    <div class="form-row irtemplate-time-row hidden" id="irtemplate-time-row-interval-time">
-        <span data-i18n="irtemplate.every"></span> <select style="width: 90px" id="irtemplate-time-interval-time-units" class="irtemplate-time-int-count" value="1">
-            <option value="1">1</option>
-            <option value="2">2</option>
-            <option value="3">3</option>
-            <option value="4">4</option>
-            <option value="5">5</option>
-            <option value="6">6</option>
-            <option value="10">10</option>
-            <option value="12">12</option>
-            <option value="15">15</option>
-            <option value="20">20</option>
-            <option value="30">30</option>
-            <option value="0">60</option>
-        </select> <span data-i18n="irtemplate.minutes"></span><br/>
-        <span data-i18n="irtemplate.between"></span> <select id="irtemplate-time-interval-time-start" class="irtemplate-time-times"></select>
-        <span data-i18n="irtemplate.and"></span> <select id="irtemplate-time-interval-time-end" class="irtemplate-time-times"></select><br/>
-        <div id="irtemplate-time-interval-time-days" class="irtemplate-time-days">
-            <div style="display: inline-block; vertical-align: top;margin-right: 5px;" data-i18n="irtemplate.on">on</div>
-            <div style="display:inline-block;">
-                <div>
-                    <label><input type='checkbox' checked value='1'/> <span data-i18n="irtemplate.days.0"></span></label>
-                    <label><input type='checkbox' checked value='2'/> <span data-i18n="irtemplate.days.1"></span></label>
-                    <label><input type='checkbox' checked value='3'/> <span data-i18n="irtemplate.days.2"></span></label>
-                </div>
-                <div>
-                    <label><input type='checkbox' checked value='4'/> <span data-i18n="irtemplate.days.3"></span></label>
-                    <label><input type='checkbox' checked value='5'/> <span data-i18n="irtemplate.days.4"></span></label>
-                    <label><input type='checkbox' checked value='6'/> <span data-i18n="irtemplate.days.5"></span></label>
-                </div>
-                <div>
-                    <label><input type='checkbox' checked value='0'/> <span data-i18n="irtemplate.days.6"></span></label>
-                </div>
-            </div>
+    <div class="form-row node-input-ircommand-container-row" style="margin-bottom: 0px;">
+        <div id="node-input-ircommand-container-div" style="box-sizing: border-box; border-radius: 5px; height: 310px; padding: 5px; border: 1px solid #ccc; overflow-y:scroll;">
+            <ol id="node-input-ircommand-container" style=" list-style-type:none; margin: 0;"></ol>
         </div>
     </div>
-
-    <div class="form-row irtemplate-time-row hidden" id="irtemplate-time-row-time">
-        <span data-i18n="irtemplate.at"></span> <input id="irtemplate-time-time" value="12:00"></input><br/>
-        <div id="irtemplate-time-time-days" class="irtemplate-time-days">
-            <div style="display: inline-block; vertical-align: top;margin-right: 5px;">on </div>
-            <div style="display:inline-block;">
-                <div>
-                    <label><input type='checkbox' checked value='1'/> <span data-i18n="irtemplate.days.0"></span></label>
-                    <label><input type='checkbox' checked value='2'/> <span data-i18n="irtemplate.days.1"></span></label>
-                    <label><input type='checkbox' checked value='3'/> <span data-i18n="irtemplate.days.2"></span></label>
-                </div>
-                <div>
-                    <label><input type='checkbox' checked value='4'/> <span data-i18n="irtemplate.days.3"></span></label>
-                    <label><input type='checkbox' checked value='5'/> <span data-i18n="irtemplate.days.4"></span></label>
-                    <label><input type='checkbox' checked value='6'/> <span data-i18n="irtemplate.days.5"></span></label>
-                </div>
-                <div>
-                    <label><input type='checkbox' checked value='0'/> <span data-i18n="irtemplate.days.6"></span></label>
-                </div>
-            </div>
-        </div>
-    </div>
-
-    <div class="form-row" id="node-once">
-        <label>&nbsp;</label>
-        <input type="checkbox" id="node-input-once" style="display: inline-block; width: auto; vertical-align: top;">
-        <label for="node-input-once" style="width: 70%;" data-i18n="irtemplate.onstart"></label>
-    </div>
-
     <div class="form-row">
-        <label for="node-input-name"><i class="fa fa-tag"></i> <span data-i18n="common.label.name"></span></label>
-        <input type="text" id="node-input-name" data-i18n="[placeholder]common.label.name">
+        <a href="#" class="editor-button editor-button-small" id="node-input-add-ircommand" style="margin-top: 4px;"><i class="fa fa-plus"></i> <span data-i18n="irtemplate.label.rule"></span></a>
     </div>
-
-    <div class="form-tips" data-i18n="[html]irtemplate.tip"></div>
 </script>
-<style>
-    .irtemplate-time-row {
-        padding-left: 110px;
-    }
-    .irtemplate-time-row select {
-        margin: 3px 0;
-    }
-    .irtemplate-time-days label {
-        -webkit-user-select: none;
-        -khtml-user-select: none;
-        -moz-user-select: none;
-        -ms-user-select: none;
-        user-select: none;
-        vertical-align: top;
-        width: 100px;
-    }
-     .irtemplate-time-days input {
-         width: auto;
-     }
-    .irtemplate-time-times {
-        width: 90px;
-    }
-    .irtemplate-time-row > .ui-spinner {
-        height: 28px;
-        margin: 3px 0;
-        border-color: rgb(204, 204, 204);
-    }
-    #irtemplate-time-time {
-        margin-top: 3px;
-        width: 75px;
-    }
-    .irtemplate-time-count {
-        width: 40px !important;
-    }
-</style>
+
 <script type="text/x-red" data-help-name="irtemplate">
-    <p>Pressing the button on the left side of the node allows a message on a topic
-       to be irtemplateed into the flow. This is mainly for test purposes.</p>
-    <p>The payload defaults to the current time in millisecs since 1970, but can
-       also be set to a String or left blank.</p>
-    <p>The repeat function allows the payload to be sent on the required schedule.</p>
-    <p>The <i>Fire once at start</i> option actually waits a short interval before firing
-       to give other nodes a chance to instantiate properly.</p>
-    <p><b>Note: </b>"Interval between times" and "at a specific time" uses cron.
-       This means that 20 minutes will be at the next hour, 20 minutes past and
-       40 minutes past - not in 20 minutes time. If you want every 20 minutes
-       from now - use the "interval" option.</p>
-    <p><b>Note: </b>all string input is escaped. To add a carriage return to a string
-    you should use a following function.</p>
+    <p>A simple function node to route messages based on its properties.</p>
+    <p>When a message arrives, the selected property is evaluated against each
+    of the defined ircommands. The message is then sent to the output of <i>all</i>
+    ircommands that pass.</p>
+    <p>Note: the <i>otherwise</i> rule applies as a "not any of" the ircommands preceding it.</p>
+    <p>
+        One able to fill field "Cmd name" with few names (aliases) as folows:
+        <ul>
+            <li><code>start, stop, power</code></li>
+            <li>or <code>start;stop;power</code></li>
+        </ul>
+    </p>
 </script>
 
 <script type="text/javascript">
-    RED.nodes.registerType('irtemplate',{
-        category: 'input',
-        color:"#a6bbcf",
+    RED.nodes.registerType('irtemplate', {
+        color: "#E2D96E",
+        category: 'multimedia',
         defaults: {
-            name: {value:""},
-            topic: {value:""},
-            payload: {value:""},
-            payloadType: {value:"date"},
-            repeat: {value:""},
-            crontab: {value:""},
-            once: {value:false}
+            name: {value: ""},
+            ircommands: {value: [{name: "", value: ""}]},
+            checkall: {value: "true", required: true},
+            outputs: {value: 1}
         },
-        inputs:0,
-        outputs:1,
+        inputs: 1,
+        outputs: 1,
         icon: "irtemplate.png",
-        label: function() {
-            if (this.payloadType === "string") {
-                if ((this.topic !== "") && ((this.topic.length + this.payload.length) <= 32)) {
-                    return this.name||this.topic + ":" + this.payload;
-                }
-                else if (this.payload.length < 24) {
-                    return this.name||this.payload;
-                }
-            }
-            if ((this.topic.length < 24) && (this.topic.length > 0)) {
-                return this.name||this.topic;
-            }
-            else { return this.name||(this.payloadType==="date"?this._("irtemplate.timestamp"):null)||this._("irtemplate.irtemplate"); }
+        label: function () {
+            return this.name || "irtemplate";
         },
-        labelStyle: function() {
-            return this.name?"node_label_italic":"";
-        },
-        oneditprepare: function() {
-            $("#irtemplate-time-type-select").change(function() {
-                $("#node-input-crontab").val('');
-                var id = $("#irtemplate-time-type-select option:selected").val();
-                $(".irtemplate-time-row").hide();
-                $("#irtemplate-time-row-"+id).show();
-                if ((id == "none") || (id == "interval")) {
-                    $("#node-once").show();
-                }
-                else {
-                    $("#node-once").hide();
-                    $("#node-input-once").prop('checked', false);
-                }
-            });
+        oneditprepare: function () {
 
-            $(".irtemplate-time-times").each(function() {
-                for (var i=0;i<24;i++) {
-                    var l = (i<10?"0":"")+i+":00";
-                    $(this).append($("<option></option>").val(i).text(l));
-                }
-            });
-            $("<option></option>").val(24).text("00:00").appendTo("#irtemplate-time-interval-time-end");
-            $("#irtemplate-time-interval-time-start").change(function() {
-                var start = Number($("#irtemplate-time-interval-time-start option:selected").val());
-                var end = Number($("#irtemplate-time-interval-time-end option:selected").val());
-                $("#irtemplate-time-interval-time-end option").remove();
-                for (var i=start+1;i<25;i++) {
-                    var l = (i<10?"0":"")+i+":00";
-                    if (i==24) {
-                        l = "00:00";
-                    }
-                    var opt = $("<option></option>").val(i).text(l).appendTo("#irtemplate-time-interval-time-end");
-                    if (i === end) {
-                        opt.attr("selected","selected");
-                    }
-                }
-            });
+            var node = this;
 
-            $(".irtemplate-time-count").spinner({
-                //max:60,
-                min:1
-            });
+            function generateIRCmd(i, ircommand) {
+                var container = $('<li/>', {style: "background: #fff; margin:0; padding:8px 0px; border-bottom: 1px solid #ccc;"});
+                var row = $('<div/>').appendTo(container);
+                $('<i style="color: #eee; cursor: move;" class="node-input-ircommand-handle fa fa-bars"></i>').appendTo(row);
 
-            $("#irtemplate-time-interval-units").change(function() {
-                var units = $("#irtemplate-time-interval-units option:selected").val();
-            });
+                var btnField = $('<a href="#" class="editor-button editor-button-small" style="margin-left: 5px; width: 34px; height: 34px; position: relative; top: 6px; font-size: 30px;"><i class="fa fa-bullseye"></i> <span data-i18n="irtemplate.label.send"></span></a>').appendTo(row);
 
-            $.widget( "ui.irtemplatetimespinner", $.ui.spinner, {
-                options: {
-                    // seconds
-                    step: 60 * 1000,
-                    // hours
-                    page: 60
-                },
-                _parse: function( value ) {
-                    if ( typeof value === "string" ) {
-                        // already a timestamp
-                        if ( Number( value ) == value ) {
-                            return Number( value );
-                        }
-                        var p = value.split(":");
-                        var offset = new Date().getTimezoneOffset();
-                        return (((Number(p[0])+1)*60)+Number(p[1])+offset)*60*1000;
-                    }
-                    return value;
-                },
-                _format: function( value ) {
-                    var d = new Date(value);
-                    var h = d.getHours();
-                    var m = d.getMinutes();
-                    return ((h < 10)?"0":"")+h+":"+((m < 10)?"0":"")+m;
-                }
-            });
-
-            $("#irtemplate-time-time").irtemplatetimespinner();
-
-            var repeattype = "none";
-            if (this.repeat != "" && this.repeat != 0) {
-                repeattype = "interval";
-                var r = "s";
-                var c = this.repeat;
-                if (this.repeat % 60 === 0) { r = "m"; c = c/60; }
-                if (this.repeat % 1440 === 0) { r = "h"; c = c/60; }
-                $("#irtemplate-time-interval-count").val(c);
-                $("#irtemplate-time-interval-units").val(r);
-                $("#irtemplate-time-interval-days").prop("disabled","disabled");
-            } else if (this.crontab) {
-                var cronparts = this.crontab.split(" ");
-                var days = cronparts[4];
-                if (!isNaN(cronparts[0]) && !isNaN(cronparts[1])) {
-                    repeattype = "time";
-                    // Fixed time
-                    var time = cronparts[1]+":"+cronparts[0];
-                    $("#irtemplate-time-time").val(time);
-                    $("#irtemplate-time-type-select option").filter(function() {return $(this).val() == "s";}).attr('selected',true);
-                    if (days == "*") {
-                        $("#irtemplate-time-time-days input[type=checkbox]").prop("checked",true);
-                    } else {
-                        $("#irtemplate-time-time-days input[type=checkbox]").removeAttr("checked");
-                        days.split(",").forEach(function(v) {
-                            $("#irtemplate-time-time-days [value=" + v + "]").prop("checked", true);
-                        });
-                    }
-                } else {
-                    repeattype = "interval-time";
-                    // interval - time period
-                    var minutes = cronparts[0].slice(2);
-                    if (minutes === "") { minutes = "0"; }
-                    $("#irtemplate-time-interval-time-units").val(minutes);
-                    if (days == "*") {
-                        $("#irtemplate-time-interval-time-days input[type=checkbox]").prop("checked",true);
-                    } else {
-                        $("#irtemplate-time-interval-time-days input[type=checkbox]").removeAttr("checked");
-                        days.split(",").forEach(function(v) {
-                            $("#irtemplate-time-interval-time-days [value=" + v + "]").prop("checked", true);
-                        });
-                    }
-                    var time = cronparts[1];
-                    var timeparts = time.split(",");
-                    var start;
-                    var end;
-                    if (timeparts.length == 1) {
-                        // 0 or 0-10
-                        var hours = timeparts[0].split("-");
-                        if (hours.length == 1) {
-                            if (hours[0] === "") {
-                                start = "0";
-                                end = "0";
+                btnField.click(function () {
+                    $.ajax({
+                        url: "irtemplate/" + node.id + "/" + valueField.val() + "/" + i,
+                        type: "POST",
+                        success: function (resp) {
+                            RED.notify(node._("irtemplate.success", {label: valueField.val()}), "success");
+                        },
+                        error: function (jqXHR, textStatus, errorThrown) {
+                            if (jqXHR.status == 404) {
+                                RED.notify(node._("common.notification.error", {message: node._("common.notification.errors.not-deployed")}), "error");
+                            } else if (jqXHR.status == 500) {
+                                RED.notify(node._("common.notification.error", {message: node._("irtemplate.errors.failed")}), "error");
+                            } else if (jqXHR.status == 0) {
+                                RED.notify(node._("common.notification.error", {message: node._("common.notification.errors.no-response")}), "error");
+                            } else {
+                                RED.notify(node._("common.notification.error", {
+                                    message: node._("common.notification.errors.unexpected", {
+                                        status: jqXHR.status,
+                                        message: textStatus
+                                    })
+                                }), "error");
                             }
-                            else {
-                                start = hours[0];
-                                end = Number(hours[0])+1;
-                            }
-                        } else {
-                            start = hours[0];
-                            end = Number(hours[1])+1;
                         }
-                    } else {
-                        // 23,0 or 17-23,0-10 or 23,0-2 or 17-23,0
-                        var startparts = timeparts[0].split("-");
-                        start = startparts[0];
-
-                        var endparts = timeparts[1].split("-");
-                        if (endparts.length == 1) {
-                            end = Number(endparts[0])+1;
-                        } else {
-                            end = Number(endparts[1])+1;
-                        }
-                    }
-                    $("#irtemplate-time-interval-time-end option").filter(function() {return $(this).val() == end;}).attr('selected',true);
-                    $("#irtemplate-time-interval-time-start option").filter(function() {return $(this).val() == start;}).attr('selected',true);
-
-                }
-            } else {
-                $("#irtemplate-time-type-select option").filter(function() {return $(this).val() == "none";}).attr('selected',true);
-            }
-
-            $(".irtemplate-time-row").hide();
-            $("#irtemplate-time-type-select option").filter(function() {return $(this).val() == repeattype;}).attr('selected',true);
-            $("#irtemplate-time-row-"+repeattype).show();
-
-            if (this.payloadType == null) {
-                if (this.payload == "") {
-                    this.payloadType = "date";
-                } else {
-                    this.payloadType = "string";
-                }
-            }
-
-            $("#node-input-payloadType").change(function() {
-                var id = $("#node-input-payloadType option:selected").val();
-                if (id === "string") {
-                    $("#node-input-row-payload").show();
-                } else {
-                    $("#node-input-row-payload").hide();
-                }
-            });
-            $("#node-input-payloadType").val(this.payloadType);
-            $("#node-input-payloadType").change();
-            $("#irtemplate-time-type-select").change();
-            $("#irtemplate-time-interval-time-start").change();
-
-        },
-        oneditsave: function() {
-            var repeat = "";
-            var crontab = "";
-            var type = $("#irtemplate-time-type-select option:selected").val();
-            if (type == "none") {
-                // nothing
-            } else if (type == "interval") {
-                var count = $("#irtemplate-time-interval-count").val();
-                var units = $("#irtemplate-time-interval-units option:selected").val();
-                if (units == "s") {
-                    repeat = count;
-                } else {
-                    if (units == "m") {
-                        //crontab = "*/"+count+" * * * "+days;
-                        repeat = count * 60;
-                    } else if (units == "h") {
-                        //crontab = "0 */"+count+" * * "+days;
-                        repeat = count * 60 * 60;
-                    }
-                }
-            } else if (type == "interval-time") {
-                repeat = "";
-                var count = $("#irtemplate-time-interval-time-units").val();
-                var startTime = Number($("#irtemplate-time-interval-time-start option:selected").val());
-                var endTime = Number($("#irtemplate-time-interval-time-end option:selected").val());
-                var days = $('#irtemplate-time-interval-time-days  input[type=checkbox]:checked').map(function(_, el) {
-                    return $(el).val()
-                }).get();
-                if (days.length == 0) {
-                    crontab = "";
-                } else {
-                    if (days.length == 7) {
-                        days="*";
-                    } else {
-                        days = days.join(",");
-                    }
-                    var timerange = "";
-                    if (endTime == 0) {
-                        timerange = startTime+"-23";
-                    } else if (startTime+1 < endTime) {
-                        timerange = startTime+"-"+(endTime-1);
-                    } else if (startTime+1 == endTime) {
-                        timerange = startTime;
-                    } else {
-                        var startpart = "";
-                        var endpart = "";
-                        if (startTime == 23) {
-                            startpart = "23";
-                        } else {
-                            startpart = startTime+"-23";
-                        }
-                        if (endTime == 1) {
-                            endpart = "0";
-                        } else {
-                            endpart = "0-"+(endTime-1);
-                        }
-                        timerange = startpart+","+endpart;
-                    }
-                    if (count === "0") {
-                        crontab = count+" "+timerange+" * * "+days;
-                    } else {
-                        crontab = "*/"+count+" "+timerange+" * * "+days;
-                    }
-                }
-            } else if (type == "time") {
-                var time = $("#irtemplate-time-time").val();
-                var days = $('#irtemplate-time-time-days  input[type=checkbox]:checked').map(function(_, el) {
-                    return $(el).val()
-                }).get();
-                if (days.length == 0) {
-                    crontab = "";
-                } else {
-                    if (days.length == 7) {
-                        days="*";
-                    } else {
-                        days = days.join(",");
-                    }
-                    var parts = time.split(":");
-                    repeat = "";
-                    crontab = parts[1]+" "+parts[0]+" * * "+days;
-                }
-            }
-
-            $("#node-input-repeat").val(repeat);
-            $("#node-input-crontab").val(crontab);
-        },
-        button: {
-            onclick: function() {
-                var label = (this.name||this.payload).replace(/&/g,"&amp;").replace(/</g,"&lt;").replace(/>/g,"&gt;");
-                if (this.payloadType === "date") { label = this._("irtemplate.timestamp"); }
-                if (this.payloadType === "none") { label = this._("irtemplate.blank"); }
-                var node = this;
-                $.ajax({
-                    url: "irtemplate/"+this.id,
-                    type:"POST",
-                    success: function(resp) {
-                        RED.notify(node._("irtemplate.success",{label:label}),"success");
-                    },
-                    error: function(jqXHR,textStatus,errorThrown) {
-                        if (jqXHR.status == 404) {
-                            RED.notify(node._("common.notification.error",{message:node._("common.notification.errors.not-deployed")}),"error");
-                        } else if (jqXHR.status == 500) {
-                            RED.notify(node._("common.notification.error",{message:node._("irtemplate.errors.failed")}),"error");
-                        } else if (jqXHR.status == 0) {
-                            RED.notify(node._("common.notification.error",{message:node._("common.notification.errors.no-response")}),"error");
-                        } else {
-                            RED.notify(node._("common.notification.error",{message:node._("common.notification.errors.unexpected",{status:jqXHR.status,message:textStatus})}),"error");
-                        }
-                    }
+                    });
                 });
+
+                var labelField = $('<input/>', {
+                    class: "node-input-ircommand-label",
+                    type: "text",
+                    style: "margin-left: 5px; width: 100px;",
+                    placeholder:"Cmd name"
+                }).appendTo(row);
+                var valueField = $('<input/>', {
+                    class: "node-input-ircommand-value",
+                    type: "text",
+                    style: "margin-left: 5px; width: 145px;",
+                    placeholder:"Cmd value [IR code]"
+                }).appendTo(row);
+
+                var finalspan = $('<span/>', {style: "float: right;margin-right: 10px;"}).appendTo(row);
+                finalspan.append(' &#8594; <span class="node-input-ircommand-index">' + i + '</span> ');
+
+                var deleteButton = $('<a/>', {
+                    href: "#",
+                    class: "editor-button editor-button-small",
+                    style: "margin-top: 7px; margin-left: 5px;"
+                }).appendTo(finalspan);
+                $('<i/>', {class: "fa fa-remove"}).appendTo(deleteButton);
+
+                deleteButton.click(function () {
+                    container.css({"background": "#fee"});
+                    container.fadeOut(300, function () {
+                        $(this).remove();
+                        $("#node-input-ircommand-container").children().each(function (i) {
+                            $(this).find(".node-input-ircommand-index").html(i + 1);
+                        });
+
+                    });
+                });
+
+                $("#node-input-ircommand-container").append(container);
+
+                labelField.val(ircommand.name);
+                valueField.val(ircommand.value);
             }
+
+            $("#node-input-add-ircommand").click(function () {
+                generateIRCmd($("#node-input-ircommand-container").children().length + 1, {name: "", value: ""});
+                $("#node-input-ircommand-container-div").scrollTop($("#node-input-ircommand-container-div").get(0).scrollHeight);
+            });
+
+            for (var i = 0; i < this.ircommands.length; i++) {
+                var ircommand = this.ircommands[i];
+                generateIRCmd(i + 1, ircommand);
+            }
+
+            function irtemplateDialogResize() {
+                var rows = $("#dialog-form>div:not(.node-input-ircommand-container-row)");
+                var height = $("#dialog-form").height();
+                for (var i = 0; i < rows.size(); i++) {
+                    height -= $(rows[i]).outerHeight(true);
+                }
+                var editorRow = $("#dialog-form>div.node-input-ircommand-container-row");
+                height -= (parseInt(editorRow.css("marginTop")) + parseInt(editorRow.css("marginBottom")));
+                $("#node-input-ircommand-container-div").css("height", height + "px");
+            };
+
+            $("#node-input-ircommand-container").sortable({
+                axis: "y",
+                update: function (event, ui) {
+                    var ircommands = $("#node-input-ircommand-container").children();
+                    ircommands.each(function (i) {
+                        $(this).find(".node-input-ircommand-index").html(i + 1);
+                    });
+                },
+                handle: ".node-input-ircommand-handle",
+                cursor: "move"
+            });
+            $("#node-input-ircommand-container .node-input-ircommand-handle").disableSelection();
+
+            $("#dialog").on("dialogresize", irtemplateDialogResize);
+            $("#dialog").one("dialogopen", function (ev) {
+                var size = $("#dialog").dialog('option', 'sizeCache-irtemplate');
+                if (size) {
+                    $("#dialog").dialog('option', 'width', size.width);
+                    $("#dialog").dialog('option', 'height', size.height);
+                    irtemplateDialogResize();
+                }
+            });
+            $("#dialog").one("dialogclose", function (ev, ui) {
+                $("#dialog").off("dialogresize", irtemplateDialogResize);
+            });
+        },
+        oneditsave: function () {
+            var ircommands = $("#node-input-ircommand-container").children();
+            var node = this;
+            node.ircommands = [];
+            ircommands.each(function (i) {
+                var ircommand = $(this);
+                node.ircommands.push({
+                    name: ircommand.find(".node-input-ircommand-label").val(),
+                    value: ircommand.find(".node-input-ircommand-value").val()
+                });
+            });
+            node.outputs = node.ircommands.length;
         }
     });
-
 </script>
