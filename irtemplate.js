@@ -53,7 +53,6 @@ module.exports = function (RED) {
                 ircommand = msg.ircommand;
             }
             else {
-                debugger;
                 if (!(msg && msg.hasOwnProperty('payload'))) return;
                 var payload = msg.payload;
                 if (typeof(msg.payload) === "object") {
@@ -75,7 +74,7 @@ module.exports = function (RED) {
                         break;
                     }
                 if (!output || !ircommand)
-                    return node.error('IRTemplate: Unknown command[' + payload.cmd + ']');
+                    return node.error('IRTemplate: Unknown command[' + JSON.stringify(payload) + ']');
             }
             toSend = new Array(output);
             toSend[output - 1] = {payload: ircommand.toString()};
