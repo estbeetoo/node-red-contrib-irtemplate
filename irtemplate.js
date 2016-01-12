@@ -60,6 +60,8 @@ module.exports = function (RED) {
                 } else if (typeof(msg.payload) === "string") {
                     try {
                         payload = JSON.parse(msg.payload);
+                        if (typeof (payload) === 'number')
+                            payload = {cmd: msg.payload.toString()};
                     } catch (e) {
                         payload = {cmd: msg.payload.toString()};
                     }
