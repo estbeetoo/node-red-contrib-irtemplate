@@ -13,11 +13,10 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  **/
+"use strict";
+var SPLIT_REGEX = /[.,:;]/;
 
 module.exports = function (RED) {
-    "use strict";
-
-    var SPLIT_REGEX = /[.,:;]/;
 
     function IRTemplateNode(n) {
         this.ircommands = n.ircommands || [];
